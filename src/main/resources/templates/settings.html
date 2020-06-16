@@ -1,0 +1,9 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="/fragments/head.html:: head('Настройки')"></div>
+<body>
+<div th:insert="/fragments/nav-bar.html :: nav-bar"></div>
+<div th:replace="/fragments/sign_up_form:: sign_up_form('Изменить данные')"/>
+<script th:src="@{/js/sign_up.js}"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+.nav-bar {
+    background: rgba(173, 167, 175, 0.25);
+}
+
+
+.sign_up_form {
+    margin-left: 35%;
+    margin-top: 7%;
+}
+
+.add_company_form {
+    margin-left: 35%;
+}
+
+.btn-outline-primary {
+    white-space: nowrap;
+}
+
+.table_div {
+    width: 80%;
+    margin-left: 7.5%;
+    margin-top: 2.5%;
+}
+
+
+.user_info .button_container {
+    position: absolute;
+    bottom: 0;
+}
+
+.notify_block{
+    margin-top: 1%;
+    width: 70%;
+    margin-left: 12.5%;
+    font-size: 115%;
+}
+
+.trash_img_input{
+    display: inline-block;
+    position: absolute;
+    right: 0;
+}
+
+input[type=file]{
+    width: 90%;
+}
+
+.report img{
+    width: 400px;
+}
+
+.report .info{
+    word-wrap: break-word;
+}
+
+.report details{
+    font-size: 155%;
+}
+
+.password_recover .question{
+    word-break: break-word;
+}
+
+.form-question{
+    font-weight: bold;
+}
+
+.answer_on_question{
+    margin-top: 5%;
+}
+
+.form-new-password .password-field{
+    margin-bottom: 5%;
+}

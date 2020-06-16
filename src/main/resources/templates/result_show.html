@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="/fragments/head.html:: head('Главная')"></div>
+<body>
+<div th:insert="/fragments/nav-bar.html :: nav-bar"></div>
+<div class="container mt-4 report">
+    <div class="h1">Отчет</div>
+
+    <div class="row">
+        <div class="col h3 col-auto">Отчет по работе</div>
+        <div class="col h4 info mt-1" th:text="${work.getResult()}"></div>
+    </div>
+    <div class="row mt-4 ml-1">
+        <details>
+            <img class="mt-3 ml-4" th:src="'/works/photo_get?id=' + ${photo.getId()}" th:each="photo: ${work.getPhotos()}">
+        </details>
+    </div>
+</div>
+</body>
+</html>

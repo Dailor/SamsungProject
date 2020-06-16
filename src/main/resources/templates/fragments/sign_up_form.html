@@ -1,0 +1,93 @@
+<div th:fragment="sign_up_form(header)" class="view full-page-intro" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="sign_up_form">
+        <div class="container">
+            <div class="row wow fadeIn">
+                <div class="col-md-6 col-xl-5 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <form name="form" method="post" onsubmit="return validate()" th:object="${user_model}"
+                                  enctype="multipart/form-data">
+                                <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                                <p class="h4 text-center mb-4" th:text="${header}"/>
+                                <div sec:authorize="hasAuthority('WORKER')"  th:with="company=${#authentication.getPrincipal().getWorker().getCompany()}" class="mb-2">
+                                    <p th:if="${company}" class="h5"
+                                       th:text="'Вы работаете на компанию  ' + ${company.getName()}"/>
+                                    <p th:unless="${company}" class="h5" th:text="'Вас еще не наняли'"/>
+                                </div>
+                                <div class="md-form">
+                                    <label for="materialFormRegisterNameEx">Имя</label>
+                                    <input name="name" type="text" id="materialFormRegisterNameEx" class="form-control"
+                                           th:field="*{name}">
+                                    <span class="text-danger" id="name_error"></span>
+                                </div>
+
+                                <div class="md-form">
+                                    <label for="materialFormRegisterSurname">Фамилия</label>
+                                    <input name="surname" type="text" id="materialFormRegisterSurname"
+                                           class="form-control" th:field="*{surname}">
+                                    <span class="text-danger" id="surname_error"></span>
+                                </div>
+
+                                <div class="md-form">
+                                    <label for="materialFormRegisterLogin">Логин</label>
+                                    <input name="username" type="text" id="materialFormRegisterLogin"
+                                           class="form-control" th:field="*{username}">
+                                    <span class="text-danger" id="login_error" th:text="${errorUsername}"/>
+                                </div>
+
+                                <div class="md-form" th:if="${header != 'Изменить данные'}">
+                                    <label for="materialFormRegisterPassword">Пароль</label>
+                                    <input name="password" type="password" id="materialFormRegisterPassword"
+                                           class="form-control" th:field="*{password}">
+                                    <span class="text-danger" id="password_error"></span>
+                                </div>
+
+                                <div class="md-form">
+                                    <label for="materialFormRegisterSecretQuestion">Секретный вопрос</label>
+                                    <input name="secret_question" type="text" id="materialFormRegisterSecretQuestion"
+                                           class="form-control" th:field="*{secret_question}">
+                                    <span class="text-danger" id="question_error"></span>
+                                </div>
+
+                                <div class="md-form">
+                                    <label for="materialFormRegisterAnswerQuestion">Ответ на вопрос</label>
+                                    <input name="answer_question" type="text" id="materialFormRegisterAnswerQuestion"
+                                           class="form-control" th:field="*{answer_question}">
+                                    <span class="text-danger" id="answer_error"></span>
+                                </div>
+
+                                <div class="md-form" th:if="${header != 'Изменить данные'}">
+                                    <label for="materialFormRegisterRoll">Роль</label>
+                                    <div class="form-group" id="materialFormRegisterRoll">
+                                        <select name="roll" class="form-control" th:field="*{roles}">
+                                            <option value="DIRECTOR">Директор</option>
+                                            <option value="WORKER">Работник</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="md-form">
+                                    <label for="materialFormRegisterAboutMe">О себе</label>
+                                    <textarea name="answer_question" type="text" id="materialFormRegisterAboutMe"
+                                              class="form-control" th:field="*{aboutMe}"/>
+                                    <span class="text-danger" id="aboutMe" th:text="${aboutMe}"></span>
+                                </div>
+
+                                <div class="md-form" style="margin-top: 1%">
+                                    <label for="photo">Фото</label>
+                                    <div>
+                                        <input id="photo" type="file" name="photo" accept="image/*">
+                                    </div>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <input class="btn btn-primary" type="submit" th:value="${header}">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="/fragments/head.html:: head('Главная')"></div>
+<body>
+<div th:insert="/fragments/nav-bar.html :: nav-bar"></div>
+
+<div class="sign_up_form add_company_form">
+    <div class="container">
+        <div class="row wow fadeIn">
+            <div class="col-md-6 col-xl-5 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <form name="form" method="post" enctype="multipart/form-data" onsubmit="return validate()" th:object="${work}">
+
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+
+                            <p class="h4 text-center mb-4" th:text="Отчет">
+
+                            <div class="alert alert-danger" th:if="${danger_msg}" th:text="${danger_msg}"></div>
+
+                            <div class="md-form mb-2">
+                                <label for="status">Статус</label>
+                                <select name="status" class="form-control" id="status" th:field="*{status}">
+                                    <option value="Выполнено">Выполнено</option>
+                                    <option value="Не выполнено">Не выполнено</option>
+                                </select>
+                            </div>
+
+                            <div class="md-form mb-2">
+                                <label for="result">Описание</label>
+                                <textarea rows="10" name="result" type="text"
+                                          id="result" class="form-control" th:field="*{result}"></textarea>
+                                <span class="text-danger" id="result_error"></span>
+                            </div>
+
+                            <div class="md-form mb-2">
+                                <div class="photos" id="photos">
+<!--                                    <div class="photo_block">-->
+<!--                                        <div class="trash_pic"></div>-->
+<!--                                        <input id="photo" type="file" name="photo" accept="image/*">-->
+<!--                                    </div>-->
+                                <div class="btn btn-primary mt-2" onclick="addPhotoField()">Добавить фото</div>
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <input class="btn btn-primary" type="submit" th:value="'Отправить'">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/workWithPhotos.js"></script>
+<script src="/js/result_send.js"></script>
+</body>
+</html>

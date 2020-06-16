@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="/fragments/head.html:: head('Главная')"></div>
+<body>
+<div th:insert="/fragments/nav-bar.html :: nav-bar"></div>
+
+<div th:each="notify :${notifications}">
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded notify_block">
+        <div class="card-body" th:text="${notify.message}"/>
+    </div>
+</div>
+
+</body>
+</html>

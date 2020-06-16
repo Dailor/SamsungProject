@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="/fragments/head.html:: head('Регистрация')"></div>
+<body>
+<div th:replace="/fragments/nav-bar.html :: nav-bar"></div>
+<div th:replace="/fragments/sign_up_form:: sign_up_form('Регистрация')"/>
+<script th:src="@{/js/sign_up.js}"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="/fragments/head.html:: head('Компания')"></div>
+<body>
+<div th:insert="/fragments/nav-bar.html :: nav-bar"></div>
+<div class="table_div">
+    <h1 th:text="Работы"/>
+    <a sec:authorize="hasAuthority('DIRECTOR')" style="margin-bottom: 0.5%; margin-top: 0.5%; font-weight: 500;" class="btn btn-primary" th:text="'Добавить работу'" href="/company/add_work"/>
+
+    <div class="alert alert-danger" th:if="${danger_msg != null}" th:text="${danger_msg}"/>
+    <div class="alert alert-success" th:if="${success_msg != null}" th:text="${success_msg}"/>
+
+    <div th:insert="/fragments/table_works.html :: table_works" class="table-responsive"/>
+</div>
+</body>
+</html>

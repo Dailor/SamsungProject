@@ -1,0 +1,8 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="/fragments/head.html:: head('Нанять работника')"></div>
+<body>
+<div th:insert="/fragments/nav-bar.html :: nav-bar"></div>
+<div th:replace="/fragments/profiles.html :: profiles('hire', 'Биржа труда')"></div>
+</body>
+</html>

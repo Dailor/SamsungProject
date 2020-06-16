@@ -1,0 +1,13 @@
+.profile{
+    padding:5%;
+}
+.profile .img{
+    text-align:center;
+}
+.profile .details{
+    border-left:3px solid #ded4da;
+}
+.profile .details p{
+    font-size:15px;
+    font-weight:bold;
+}

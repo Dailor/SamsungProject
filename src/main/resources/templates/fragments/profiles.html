@@ -1,0 +1,45 @@
+<div class="table_div" th:fragment="profiles(type_page, header_page)" xmlns:th="http://www.thymeleaf.org">
+    <h1 th:text="${header_page}"/>
+    <div class="alert alert-danger" th:if="${danger_msg != null}" th:text="${danger_msg}"/>
+    <div class="alert alert-success" th:if="${success_msg != null}" th:text="${success_msg}"/>
+    <div class="users" th:each="user : ${users}">
+        <div class="jumbotron user_info" style="margin-top: 2%;box-shadow: 0 0 5px #333;">
+            <div class="row">
+                <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
+                    <div align="center">
+                        <img th:src="'/user/photo?id=' + ${user.getId()}"
+                             alt="stack photo" class="img">
+                    </div>
+                </div>
+
+                <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
+                    <div class="container" style="border-bottom:1px solid black">
+                        <!--FullName-->
+                        <h2 style="margin-left: -2%" th:text="${user.getFullName()}"/>
+                    </div>
+                    <div class="container details" style="margin-top: 1%">
+                        <div><p><span class="glyphicon glyphicon-earphone one" style="word-wrap:break-word;"
+                                      th:text="${user.getAboutMe()}">
+                            </span></p>
+                        </div>
+                    </div>
+                    <div class="button_container">
+                        <div th:if="${type_page} == 'hire'">
+                            <a class="btn btn-success mr-3" th:href="'hire_worker/add_user?id=' + ${user.getWorker().getId()}">Пригласить</a>
+                        </div>
+
+                        <div th:if="${type_page} == 'workers_list'">
+                            <a class="btn btn-danger mr-3"
+                               th:href="'dismiss_worker?worker_id=' + ${user.getWorker().getId()}">Уволить</a>
+                        </div>
+
+                        <div th:if="${type_page} == 'works_invites'">
+                            <a th:href="'/invites/answer_invite?answer=ACCEPT&user_id=' + ${user.getId()}" class="btn btn-success mr-3">Согласится</a>
+                            <a th:href="'/invites/answer_invite?answer=DENIED&user_id=' + ${user.getId()}" class="btn btn-danger mr-3">Отказаться</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

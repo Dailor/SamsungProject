@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="/fragments/head.html:: head('Создание компании')"></div>
+<body>
+<div th:replace="/fragments/nav-bar.html :: nav-bar"></div>
+<div class="view full-page-intro">
+    <div class="sign_up_form add_company_form">
+        <div class="container">
+            <div class="row wow fadeIn">
+                <div class="col-md-6 col-xl-5 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <form name="form" method="post" onsubmit="return validate()" th:object="${company_model}">
+                                <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                                <p class="h4 text-center mb-4">Создание компании</p>
+                                <div class="alert alert-danger" th:if="${danger_msg} != null" th:text="${danger_msg}"/>
+                                <div class="md-form">
+                                    <label for="materialFormRegisterSurname">Название</label>
+                                    <input name="name" type="text" id="materialFormRegisterSurname" class="form-control" th:field="*{name}"/>
+                                    <span class="text-danger" id="name_error" th:text="${errorName}"/>
+                                </div>
+
+                                <div class="md-form">
+                                    <label for="materialFormRegisteredDescription">Описание</label>
+                                    <textarea rows="10" name="description" type="text" id="materialFormRegisteredDescription" class="form-control" th:field="*{description}"/>
+                                    <span class="text-danger" id="description_error"></span>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <input class="btn btn-primary" type="submit" value="Создать">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+    function validate() {
+
+        var name = document.forms['form']['name'].value;
+        var description = document.forms['form']['description'].value;
+        var error = "*данное поле обязательно для заполнения";
+
+        var fields = [name, description]
+
+        if (name.length == 0) {
+            document.getElementById('name_error').innerHTML = error;
+        } else {
+            document.getElementById('name_error').innerHTML = '';
+        }
+
+        if (description.length == 0) {
+            document.getElementById('description_error').innerHTML = error;
+        } else {
+            document.getElementById('description_error').innerHTML = '';
+        }
+
+
+        for (var i = 0; i < fields.length; i++) {
+            if (fields[i].length == 0) {
+                return false;
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

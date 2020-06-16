@@ -1,0 +1,10 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="/fragments/head.html:: head('Главная')"></div>
+<body>
+<div th:insert="/fragments/nav-bar.html :: nav-bar"></div>
+<div th:insert="/fragments/profiles.html :: profiles('works_invites', 'Приглашения')">
+
+</div>
+</body>
+</html>

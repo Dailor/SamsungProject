@@ -1,0 +1,91 @@
+<div th:fragment="nav-bar" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom box-shadow nav-bar">
+        <h1 class="my-0 mr-md-auto font-weight-normal"><a style="color: black;" href="/"> Work Helper</a></h1>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <div class="container">
+                <div class="row">
+
+                    <!--For Auth User-->
+                    <a href="/notify" id="notifyCount" class="notification notify btn btn-outline-primary" sec:authorize="isAuthenticated()">
+                    </a>
+                    <div class="col-md-auto" sec:authorize="isAuthenticated()">
+                        <div class="dropdown">
+                            <div class="btn btn-outline-primary dropdown-toggle" type="button"
+                                 id="dropdownMenuButton"
+                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                 th:text="${#authentication.getPrincipal().getUsername()}"/>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <span class="dropdown-item"
+                                      th:text="'Balance: ' +  ${#authentication.getPrincipal().getBalance()}"/>
+                                <a class="dropdown-item" href="/user/settings">Настройки</a>
+                                <a class="dropdown-item" href="/logout">Выйти</a>
+                            </div>
+                        </div>
+                        <script src="/js/getCountEvents.js"></script>
+                    </div>
+
+                    <!--For Director-->
+                    <div class="col-md-auto" sec:authorize="hasAuthority('DIRECTOR')">
+                        <a class="btn btn-outline-primary" href="/company">Компания</a>
+                    </div>
+                    <div class="col-md-auto" sec:authorize="hasAuthority('DIRECTOR')">
+                        <a class="btn btn-outline-primary" href="/company/workers">Работники</a>
+                    </div>
+                    <div class="col-md-auto" sec:authorize="hasAuthority('DIRECTOR')">
+                        <a class="btn btn-outline-primary" href="/hire_worker">Биржа труда</a>
+                    </div>
+                    <!--End for Director-->
+
+                    <!--For Worker-->
+                    <div class="col-md-auto" sec:authorize="hasAuthority('WORKER')">
+                        <a class="btn btn-outline-primary" href="/works">Работа</a>
+                    </div>
+                    <div class="col-md-auto" sec:authorize="hasAuthority('WORKER')">
+                        <a class="btn btn-outline-primary" href="/invites">Приглашения</a>
+                    </div>
+                    <!--End for Worker-->
+
+                    <!--For Anonymous-->
+                    <div class="col-md-auto" sec:authorize="!isAuthenticated()">
+                        <a class="btn btn-outline-primary" href="/login">Войти</a>
+                    </div>
+                    <div class="col-md-auto" sec:authorize="!isAuthenticated()">
+                        <a class="btn btn-outline-primary" href="/sign_up">Зарегистрироваться</a>
+                    </div>
+                    <div class="col-md-auto" sec:authorize="!isAuthenticated()">
+                        <a class="btn btn-outline-primary" href="/help">Помощь</a>
+                    </div>
+                    <!--End for Anonymous-->
+                </div>
+            </div>
+        </nav>
+    </div>
+    <script>
+        const $dropdown = $(".dropdown");
+        const $dropdownToggle = $(".dropdown-toggle");
+        const $dropdownMenu = $(".dropdown-menu");
+        const showClass = "show";
+
+        $(window).on("load resize", function () {
+            if (this.matchMedia("(min-width: 768px)").matches) {
+                $dropdown.hover(
+                    function () {
+                        const $this = $(this);
+                        $this.addClass(showClass);
+                        $this.find($dropdownToggle).attr("aria-expanded", "true");
+                        $this.find($dropdownMenu).addClass(showClass);
+                    },
+                    function () {
+                        const $this = $(this);
+                        $this.removeClass(showClass);
+                        $this.find($dropdownToggle).attr("aria-expanded", "false");
+                        $this.find($dropdownMenu).removeClass(showClass);
+                    }
+                );
+            } else {
+                $dropdown.off("mouseenter mouseleave");
+            }
+        });
+    </script>
+
+</div>

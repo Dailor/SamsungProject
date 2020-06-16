@@ -1,0 +1,46 @@
+<table class="table" th:fragment="table_works" xmlns:th="http://www.w3.org/1999/xhtml">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Задание</th>
+        <th scope="col">Описание</th>
+        <th scope="col">Выполняет</th>
+        <th scope="col">Адрес</th>
+        <th scope="col">Цена</th>
+        <th scope="col">Дата создания</th>
+        <th scope="col">Дата завершения</th>
+        <th scope="col">Статус выплаты</th>
+        <th scope="col">Статус работы</th>
+        <th scope="col">Действия</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="work : ${works}">
+        <td th:text="${work.getName()}"></td>
+        <td th:text="${work.getDescription()}"></td>
+        <td th:text="${work.getWorkerFullName()}"></td>
+        <td th:text="${work.getAddress()}"></td>
+        <td th:text="${work.getPrice()}"></td>
+        <td th:text="${work.getStartTimeToString()}"></td>
+        <td th:text="${work.getEndTimeToString()}"></td>
+        <td th:text="${work.isPayment()}? 'Выплачено': 'Не выплачено'"></td>
+        <td th:text="${work.getStatus()}"></td>
+        <td>
+            <div sec:authorize="hasAuthority('DIRECTOR')">
+                <div th:if="${work.getStatus() == 'Выполняется'}">
+                    <a th:href="'/company/change?work_id=' + ${work.getId()}" class="btn btn-success mb-1">Изменить</a>
+                    <a th:href="'/company/delete?work_id=' + ${work.getId()}" class="btn btn-danger">Удалить</a>
+                </div>
+                <div th:unless="${work.getStatus()} == 'Выполняется'">
+                    <a class="btn btn-primary" th:href="'/company/result?work_id=' + ${work.getId()}">Посмотреть отчет</a>
+                </div>
+            </div>
+
+            <div sec:authorize="hasAuthority('WORKER')">
+                <a th:href="'/works/send_result?id=' + ${work.getId()}" class="btn btn-primary">Сдать отсчет</a>
+            </div>
+        </td>
+    </tr>
+
+    </tbody>
+</table>

@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="/fragments/head.html:: head('Логин')"></div>
+<body>
+<div th:replace="/fragments/nav-bar.html :: nav-bar"></div>
+
+<div class="container-fluid login-container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 login-form-1">
+
+            <form th:action="@{/login}" method="post" onsubmit="return validate()" name="form">
+                <h3>Авторизация</h3>
+                <div class="form-group">
+                    <input id="username" name="username" type="text" class="form-control" placeholder="Логин" value=""/>
+                </div>
+                <div class="form-group">
+                    <input id="password" name="password" type="password" class="form-control" placeholder="Пароль"
+                           value=""/>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btnSubmit" value="Войти"/>
+                </div>
+                <div class="form-group">
+                    <a href="/forgot_password" class="ForgetPwd">Забыл пароль?</a>
+                    <br/>
+                    <br/>
+                    <div id="text-danger" class="text-danger" th:if="${param.error}"
+                         th:text="'Неправильные логин или пароль'">
+                        <div id="text-danger" class="text-danger" th:unless="${param.error}" th:text="''">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function validate() {
+        var login = document.forms["form"]["username"];
+        var password = document.forms["form"]["password"];
+        var error_div = document.getElementById("text-danger");
+
+        if (login.value == "" && password.value == "") {
+            error_div.innerHTML = "Нужно ввести логин и пароль";
+            return false;
+        }
+        if (login.value == "") {
+            error_div.innerHTML = "Нужно ввесии логин";
+
+            return false;
+        }
+        if (password.value == "") {
+            error_div.innerHTML = "Нужно ввести пароль";
+            return false;
+        }
+    }
+</script>
+</body>
+</html>
