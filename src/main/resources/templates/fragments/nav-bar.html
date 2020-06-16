@@ -10,7 +10,7 @@
                     </a>
                     <div class="col-md-auto" sec:authorize="isAuthenticated()">
                         <div class="dropdown">
-                            <div class="btn btn-outline-primary dropdown-toggle" type="button"
+                            <div class="btn btn-outline-primary dropdown-toggle login_text" type="button"
                                  id="dropdownMenuButton"
                                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                  th:text="${#authentication.getPrincipal().getUsername()}"/>

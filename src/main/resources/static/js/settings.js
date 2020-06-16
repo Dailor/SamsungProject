@@ -3,7 +3,6 @@ function validate() {
     var name = $("#name");
     var surname = $("#surname");
     var username = $("#username");
-    var password = $("#password");
     var secret_question = $("#SecretQuestion");
     var answer_question = $("#AnswerQuestion");
     var aboutMe = $("#AboutMe");
@@ -11,7 +10,7 @@ function validate() {
     var send_status = true;
 
 
-    var fields = [name, surname, username, password, secret_question, answer_question, aboutMe];
+    var fields = [name, surname, username, secret_question, answer_question, aboutMe];
 
     for (var i = 0; i < fields.length; i++) {
         var field = fields[i];
@@ -26,7 +25,7 @@ function validate() {
     }
 
     $.get("/tools/check_exists", {"username": username.val()}, function (data, status) {
-        if(data.result){
+        if(!data.result && $(".login_text").val() != username.val()){
             var errorMsg = username.parent().find(".text-danger");
             errorMsg.text("Пользователь с таким именем уже существует");
 
@@ -36,3 +35,7 @@ function validate() {
 
     return send_status;
 }
+
+$().ready(function () {
+$("#AnswerQuestion").val("");
+})

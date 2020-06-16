@@ -151,6 +151,10 @@ public class User implements UserDetails {
         this.answer_question = DigestUtils.md5DigestAsHex(answer_question.getBytes());
     }
 
+    public void setAlreadyHashedAns(String hashed_ans){
+        this.answer_question = hashed_ans;
+    }
+
     public long getBalance() {
         return balance;
     }

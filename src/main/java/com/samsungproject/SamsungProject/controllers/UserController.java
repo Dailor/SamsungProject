@@ -40,6 +40,7 @@ public class UserController {
         User userFromDB = userRepository.findByUsername(user.getUsername());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User userNow = (User) authentication.getPrincipal();
+
         if (userFromDB != null && !userNow.getUsername().equals(user.getUsername())) {
             model.addAttribute("user_model", user);
             model.addAttribute("errorUsername", "Такой логин уже существует");
@@ -50,7 +51,11 @@ public class UserController {
         userNow.setSurname(user.getSurname());
         userNow.setUsername(user.getUsername());
         userNow.setSecret_question(user.getSecret_question());
-        userNow.setAnswer_question(user.getAnswer_question());
+
+        if (!userNow.getAnswer_question().equals(user.getAnswer_question())) {
+            userNow.setAlreadyHashedAns(user.getAnswer_question());
+        }
+
         userNow.setAboutMe(user.getAboutMe());
 
         if (filePhoto.getBytes().length != 0) {

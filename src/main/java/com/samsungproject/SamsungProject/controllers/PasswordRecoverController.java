@@ -2,12 +2,14 @@ package com.samsungproject.SamsungProject.controllers;
 
 import com.samsungproject.SamsungProject.models.User;
 import com.samsungproject.SamsungProject.repo.UserRepository;
+import com.samsungproject.SamsungProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,6 +35,7 @@ public class PasswordRecoverController {
 
     @Autowired
     private SessionRegistry sessionRegistry;
+
 
     @GetMapping
     public String getPage(Model model) {
@@ -70,24 +74,31 @@ public class PasswordRecoverController {
 
     @PostMapping
     public String setNewPassword(
-                                @RequestParam("old-hashed-password") String old_hashed_password,
-                                 @RequestParam("password") String newPassword,
-                                 @RequestParam("username") String username,
-                                 @RequestParam("password-repeat") String password_repeat,
-                                 RedirectAttributes redirectAttributes) {
+            @RequestParam("old-hashed-password") String old_hashed_password,
+            @RequestParam("password") String newPassword,
+            @RequestParam("username") String username,
+            @RequestParam("password-repeat") String password_repeat,
+            RedirectAttributes redirectAttributes) {
         User user = userRepository.findByUsername(username);
 
 
-
-        if(user != null){
-            if(user.getPassword().equals(old_hashed_password)){
+        if (user != null) {
+            if (user.getPassword().equals(old_hashed_password)) {
                 user.setPassword(passwordEncoder.encode(newPassword));
                 userRepository.save(user);
 
-                List<SessionInformation> sessions = sessionRegistry.getAllSessions(user, false);
                 try {
-                    sessionRegistry.getSessionInformation(sessions.get(0).getSessionId()).expireNow();
-                }catch (Exception e){}
+                    for (Object principal : sessionRegistry.getAllPrincipals()) {
+                        User userCheck = (User) principal;
+                        if (user.getId() == user.getId()) {
+                            for (SessionInformation session : sessionRegistry.getAllSessions(principal, false)) {
+                                sessionRegistry.getSessionInformation(session.getSessionId()).expireNow();
+                            }
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                }
                 redirectAttributes.addFlashAttribute("success_msg", "Вы успешно сменили пароль");
             }
         }

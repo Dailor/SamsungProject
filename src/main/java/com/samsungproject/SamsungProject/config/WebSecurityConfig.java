@@ -40,6 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").anonymous()
                 .antMatchers("/forgot_password/*").anonymous()
                 .antMatchers("/forgot_password").anonymous()
+                .antMatchers("/tools/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -51,7 +52,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
-                .permitAll();
+                .permitAll().and().sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(false).sessionRegistry(sessionRegistry());
+
 
     }
 

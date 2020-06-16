@@ -7,11 +7,15 @@ function on_ready() {
 
 function getCountUnreadEvents() {
     $.get("/notify/getCountUnread", {}, function (data, status) {
-        var notifyBlock = $("#notifyCount")
-        var notifyCount = data.count
-        if (notifyCount) {
-            notifyBlock.addClass("show-count")
-            notifyBlock.attr("data-count", notifyCount);
+        var notifyBlock = $("#notifyCount");
+
+        if(!data.hasOwnProperty("count")){
+            location.replace("/");
+        }
+
+        else if (data.count != 0) {
+            notifyBlock.addClass("show-count");
+            notifyBlock.attr("data-count", data.count);
             notifyBlock.attr("href", "/notify");
         }
         else {

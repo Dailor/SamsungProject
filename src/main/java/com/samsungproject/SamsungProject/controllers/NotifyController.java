@@ -8,6 +8,7 @@ import com.samsungproject.SamsungProject.models.User;
 import com.samsungproject.SamsungProject.repo.EventNotificationRepository;
 import com.samsungproject.SamsungProject.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/notify")
+@PreAuthorize("hasAnyAuthority('DIRECTOR', 'WORKER')")
 public class NotifyController {
     @Autowired
     ObjectMapper mapper;
